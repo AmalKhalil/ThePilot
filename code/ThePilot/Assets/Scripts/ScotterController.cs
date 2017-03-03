@@ -19,6 +19,8 @@ public class ScotterController : MonoBehaviour
 
 	private Rigidbody scotterRigidbody;
 	private GameManager gameManager;
+	private Boolean hasRider = false;
+
 
 	void Start ()
 	{
@@ -27,22 +29,24 @@ public class ScotterController : MonoBehaviour
 		this.scotterRigidbody = this.GetComponent<Rigidbody> ();
 	}
 			
-	void Update ()
+	void FixedUpdate ()
 	{
-		Vector3 input = getMoveInput ();
-		handleGasPush (input.z);
-		handleSteerRotation (input.x);
-		handleBrakePush ();
+		if (hasRider) {
+			Vector3 input = getMoveInput ();
+			handleGasPush (input.z);
+			handleSteerRotation (input.x);
+			handleBrakePush ();
+		}	
 	}
 
 
 
 	void OnCollisionEnter (Collision collision)
 	{
-		if (collision.gameObject.tag == "DeathZone" || this.IsGrounded () == false) {
+		/*if (collision.gameObject.tag == "DeathZone" || this.IsGrounded () == false) {
 			Destroy(this);
 			this.gameManager.damage ();
-		}
+		}*/
 	}
 
 	private Vector3 getMoveInput ()
@@ -61,9 +65,12 @@ public class ScotterController : MonoBehaviour
 
 	void rotateSteerVisually ()
 	{
-		Transform stearingTrans = stearing.transform;
-		stearingTrans.localEulerAngles = new Vector3 (stearingTrans.localEulerAngles.x, frontWheel.steerAngle, stearingTrans.localEulerAngles.z);
-		//stearingTrans.Rotate (0, frontWheel.rpm / 60 * 360 * Time.deltaTime, 0);
+		if (stearing != null) {
+			Transform stearingTrans = stearing.transform;
+			stearingTrans.localEulerAngles = new Vector3 (stearingTrans.localEulerAngles.x, frontWheel.steerAngle, stearingTrans.localEulerAngles.z);
+			//stearingTrans.Rotate (0, frontWheel.rpm / 60 * 360 * Time.deltaTime, 0);
+		}
+
 	}
 
 	private void handleSteerRotation (float angle)
