@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Scotter {
+public class Scotter : MonoBehaviour{
 
 	private float velocity;
 	private float steeringAngle;
 	private float brakeTorque;
+	private bool hasRiderOnIt= false;
 
 	public float getVelocity ()
 	{
@@ -28,6 +29,11 @@ public class Scotter {
 	{
 		return this.brakeTorque;
 	}
+
+	public bool hasRider ()
+	{
+		return this.hasRiderOnIt;
+	}
 		
 	public void setVelocity (float pVelocity)
 	{
@@ -42,5 +48,10 @@ public class Scotter {
 	public void setBrakeTorque (float pBrakeTorque)
 	{
 		this.brakeTorque =pBrakeTorque;
+	}
+
+	public void sethasRider (bool pHasRider)
+	{
+		this.hasRiderOnIt = pHasRider;
 	}
 }

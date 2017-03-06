@@ -1,7 +1,7 @@
 # Written by MakeHuman 1.1.0
 version v1.1.0
 tags Player
-camera 7.0 18.0 0.405267248564 0.603695348395 -0.297375313234 1.55
+camera 45.0 5.0 0.217795560179 0.266723541769 0.55033545364 1.7125
 modifier macrodetails-universal/Muscle 0.491000
 modifier macrodetails/African 0.069932
 modifier macrodetails-proportions/BodyProportions 0.500000
@@ -21,14 +21,14 @@ tongue tongue01 52ad91a3-caad-4e50-8c38-67634e5e789c
 teeth Teeth_Base 0a5ec82a-0d5f-43ce-a765-8f076f95692d
 proxy male_muscle_13290 79e967dc-3f7a-4f2d-851e-4f06753ed571
 hair short04 e09bfd91-f83f-4f9a-ba8c-4635cd1ae0d8
-skeleton cmu_mb.mhskel
+skeleton game_engine.mhskel
 eyebrows eyebrow008 79ea307f-a942-40dd-bf50-bbaa41f02034
 eyes HighPolyEyes 2c12f43b-1303-432c-b7ce-d78346baf2e6
 pose standing02.bvh
 clothes male_casualsuit01 79ced554-1d8a-4c14-a6a8-e1de90b09c32
 clothesHideFaces True
 expression smile01.mhpose
-skinMaterial skins/young_caucasian_male/young_caucasian_male.mhmat
+skinMaterial skins/middleage_caucasian_male/middleage_caucasian_male.mhmat
 material short04 e09bfd91-f83f-4f9a-ba8c-4635cd1ae0d8 short04.mhmat
 material HighPolyEyes 2c12f43b-1303-432c-b7ce-d78346baf2e6 eyes/materials/brown.mhmat
 subdivide False

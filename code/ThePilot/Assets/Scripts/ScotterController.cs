@@ -3,6 +3,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 using System;
 
+[RequireComponent(typeof (Scotter))]
 public class ScotterController : MonoBehaviour
 {
 
@@ -19,19 +20,17 @@ public class ScotterController : MonoBehaviour
 
 	private Rigidbody scotterRigidbody;
 	private GameManager gameManager;
-	private Boolean hasRider = false;
-
 
 	void Start ()
 	{
 		this.gameManager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ();
-		this.scotter = this.gameManager.getScotter ();
+		this.scotter = this.GetComponent<Scotter> ();
 		this.scotterRigidbody = this.GetComponent<Rigidbody> ();
 	}
 			
 	void FixedUpdate ()
 	{
-		if (hasRider) {
+		if (this.scotter != null && this.scotter.hasRider()) {
 			Vector3 input = getMoveInput ();
 			handleGasPush (input.z);
 			handleSteerRotation (input.x);
@@ -43,10 +42,10 @@ public class ScotterController : MonoBehaviour
 
 	void OnCollisionEnter (Collision collision)
 	{
-		/*if (collision.gameObject.tag == "DeathZone" || this.IsGrounded () == false) {
+		if (collision.gameObject.tag == "DeathZone" || this.IsGrounded () == false) {
 			Destroy(this);
 			this.gameManager.damage ();
-		}*/
+		}
 	}
 
 	private Vector3 getMoveInput ()
@@ -60,7 +59,8 @@ public class ScotterController : MonoBehaviour
 
 	private void handleGasPush (float push)
 	{
-			applyVelocity (push);
+		applyVelocity (push);
+
 	}
 
 	void rotateSteerVisually ()

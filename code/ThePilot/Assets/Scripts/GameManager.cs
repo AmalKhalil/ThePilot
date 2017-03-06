@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject mainCamera;
 
-	public GameObject player;
+	public GameObject scotterObject;
 	public GameObject destination;
 
 	public Text speedText;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject playAgain;
 
-	private Scotter scotter = new Scotter ();
+	private Scotter scooter;
 	private Boolean isPlaying = true;
 	private int lifes;
 
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
 		if (gm == null)
 			gm = this.GetComponent<GameManager>();
 
+		this.scooter = scotterObject.GetComponent<Scotter> ();
 		this.lifes = noOfLifes;
 		this.noOfLivesText.text = "Lifes :" + this.lifes;
 	}
@@ -40,8 +41,8 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isPlaying) {
-			speedText.text = Math.Round (scotter.getVelocityInKm ()) + " KM/H";
-			if (scotter.getBrakeTorque () > 0) {
+			speedText.text = Math.Round (scooter.getVelocityInKm ()) + " KM/H";
+			if (scooter.getBrakeTorque () > 0) {
 				brakeText.text = "Brake On";
 				brakeText.color = Color.red;
 			} else {
@@ -49,9 +50,9 @@ public class GameManager : MonoBehaviour {
 				brakeText.color = Color.white;
 			}
 		}
-		float distance = Vector3.Distance (this.player.transform.position, this.destination.transform.position);
+		float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
 
-		if (distance < 25 & this.scotter.getVelocityInKm() < 20) {
+		if (distance < 25 & this.scooter.getVelocityInKm() < 20) {
 			this.addressText.text = "You are there. Congratulation!!!";
 			this.addressText.color = Color.red;
 			this.playAgain.SetActive (true);
@@ -60,9 +61,6 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	public Scotter getScotter(){
-		return this.scotter;
-	}
 
 	public void damage(){
 		//if (this.lifes > 0) {
