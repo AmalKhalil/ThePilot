@@ -1,7 +1,7 @@
 # Written by MakeHuman 1.1.0
 version v1.1.0
 tags Player
-camera 45.0 5.0 0.217795560179 0.266723541769 0.55033545364 1.7125
+camera 45.0 5.0 0.524606810838 -0.21802488875 0.186198798835 0.25
 modifier macrodetails-universal/Muscle 0.491000
 modifier macrodetails/African 0.069932
 modifier macrodetails-proportions/BodyProportions 0.500000
@@ -26,6 +26,7 @@ eyebrows eyebrow008 79ea307f-a942-40dd-bf50-bbaa41f02034
 eyes HighPolyEyes 2c12f43b-1303-432c-b7ce-d78346baf2e6
 pose standing02.bvh
 clothes male_casualsuit01 79ced554-1d8a-4c14-a6a8-e1de90b09c32
+clothes shoes06 35abc230-ebaa-48d4-8ff7-6d84168291a0
 clothesHideFaces True
 expression smile01.mhpose
 skinMaterial skins/middleage_caucasian_male/middleage_caucasian_male.mhmat

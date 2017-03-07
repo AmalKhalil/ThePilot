@@ -13,12 +13,12 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 m_Move;
 	private bool m_Jump;
 	private GameObject scotterObject;
-	private Scotter scotter;
+	private Scooter scotter;
 
 	private void Start()
 	{
 		this.scotterObject = GameObject.FindGameObjectWithTag ("Scooter");
-		this.scotter =  this.scotterObject.GetComponent<Scotter> ();
+		this.scotter =  this.scotterObject.GetComponent<Scooter> ();
 
 		// get the transform of the main camera
 		if (Camera.main != null)
@@ -73,14 +73,17 @@ public class PlayerController : MonoBehaviour {
 
 			// pass all parameters to the character control script
 			if (m_Jump) {
-				m_Character.Ride (scotterObject, m_CamForward);
-				this.scotter.sethasRider (true);
+				if (m_Character.MoveToScooter (m_CamForward)) {
+					m_Character.JumpOnScooter (m_CamForward);
+					this.scotter.sethasRider (true);
+					m_Jump = false;
+				}
 			} else {
 				m_Character.Move (m_Move, false, false);
 			}
 
 
-			m_Jump = false;
+
 		}
 	}
 }

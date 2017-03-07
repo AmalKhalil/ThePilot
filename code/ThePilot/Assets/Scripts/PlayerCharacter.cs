@@ -5,23 +5,48 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 public class PlayerCharacter : ThirdPersonCharacter {
 
-	public void Ride(GameObject scooter, Vector3 cameraForward){
+	public GameObject m_scooter;
+	private float time =  10;
+
+
+	public bool MoveToScooter(Vector3 pCameraForward){
+		Vector3 target = m_scooter.transform.position;
+		Vector3 move = Vector3.MoveTowards (this.transform.position, target, 2f) - this.transform.position ;
+		this.Move (move , false, false);
+
+		float distance = Vector3.Distance (transform.position, target);
+		if (distance <= 2f) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public void JumpOnScooter(Vector3 pCameraForward){
+
+		//Look to Camera
+		this.transform.LookAt (pCameraForward);
+
+		//Set Scooter as parent
+		transform.parent = m_scooter.transform;
 
 		//Change Capsule 
-		m_Capsule.height = m_Capsule.height / 4f;
-		m_Capsule.center =  m_Capsule.center - (Vector3.up * 0.3f) ;
+		this.m_Capsule.height = this.m_Capsule.height / 4f;
+		this.m_Capsule.center =  this.m_Capsule.center - (Vector3.up * 0.3f) ;
 
-		//Ride the scooter
-		transform.parent = scooter.transform;
-		transform.position = scooter.transform.position +
-			(Vector3.up * 1f) +
-			(Vector3.right * - 0.4f) + 
-			(Vector3.forward * 0.23f);
-
+		//Ride scooter
+		this.transform.position = m_scooter.GetComponent<Scooter>().getSeatWaypoint().transform.position;
 
 		this.m_Animator.SetBool("Riding", true);
-		//m_Animator.SetFloat("Ride", 0, 0, Time.deltaTime);
-		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition;
+		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition; 
+	}
+
+	public void JumpOffScooter(){
+		this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+		transform.parent = null;
+		this.m_Animator.SetBool("Riding", false);
+
 	}
 
 

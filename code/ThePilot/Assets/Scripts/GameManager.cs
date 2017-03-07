@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject mainCamera;
 
 	public GameObject scotterObject;
+	public GameObject playerObject;
 	public GameObject destination;
 
 	public Text speedText;
@@ -23,7 +24,8 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject playAgain;
 
-	private Scotter scooter;
+	private Scooter scooter;
+	private PlayerCharacter playerCharacter;
 	private Boolean isPlaying = true;
 	private int lifes;
 
@@ -33,7 +35,8 @@ public class GameManager : MonoBehaviour {
 		if (gm == null)
 			gm = this.GetComponent<GameManager>();
 
-		this.scooter = scotterObject.GetComponent<Scotter> ();
+		this.scooter = scotterObject.GetComponent<Scooter> ();
+		this.playerCharacter = playerObject.GetComponent<PlayerCharacter> ();
 		this.lifes = noOfLifes;
 		this.noOfLivesText.text = "Lifes :" + this.lifes;
 	}
@@ -64,6 +67,7 @@ public class GameManager : MonoBehaviour {
 
 	public void damage(){
 		//if (this.lifes > 0) {
+		this.playerCharacter.JumpOffScooter();
 			this.addressText.text = "Oooops, You Lost!";
 			this.addressText.color = Color.red;
 			this.lifes = this.lifes-1;

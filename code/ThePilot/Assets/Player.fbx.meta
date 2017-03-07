@@ -67,6 +67,7 @@ ModelImporter:
     100118: tongue01Mesh
     100120: upperarm_l
     100122: upperarm_r
+    100124: shoes06Mesh
     400000: ball_l
     400002: ball_r
     400004: calf_l
@@ -129,6 +130,7 @@ ModelImporter:
     400118: tongue01Mesh
     400120: upperarm_l
     400122: upperarm_r
+    400124: shoes06Mesh
     4300000: male_muscle_13290Mesh
     4300002: short04Mesh
     4300004: high-polyMesh
@@ -136,6 +138,7 @@ ModelImporter:
     4300008: teeth_baseMesh
     4300010: tongue01Mesh
     4300012: male_casualsuit01Mesh
+    4300014: shoes06Mesh
     9500000: //RootNode
     13700000: eyebrow008Mesh
     13700002: high-polyMesh
@@ -144,6 +147,7 @@ ModelImporter:
     13700008: short04Mesh
     13700010: teeth_baseMesh
     13700012: tongue01Mesh
+    13700014: shoes06Mesh
   materials:
     importMaterials: 1
     materialName: 0

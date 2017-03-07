@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Scotter : MonoBehaviour{
+public class Scooter : MonoBehaviour{
 
+	public GameObject SeatWaypoint;
 	private float velocity;
 	private float steeringAngle;
 	private float brakeTorque;
@@ -28,6 +29,11 @@ public class Scotter : MonoBehaviour{
 	public float getBrakeTorque ()
 	{
 		return this.brakeTorque;
+	}
+
+	public GameObject getSeatWaypoint ()
+	{
+		return this.SeatWaypoint;
 	}
 
 	public bool hasRider ()
