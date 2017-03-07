@@ -3,6 +3,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 using System;
 
+[RequireComponent(typeof (Scooter))]
 public class ScotterController : MonoBehaviour
 {
 
@@ -15,7 +16,7 @@ public class ScotterController : MonoBehaviour
 	public WheelCollider rearWheel;
 	public GameObject stearing;
 
-	private Scotter scotter;
+	private Scooter scotter;
 
 	private Rigidbody scotterRigidbody;
 	private GameManager gameManager;
@@ -23,16 +24,22 @@ public class ScotterController : MonoBehaviour
 	void Start ()
 	{
 		this.gameManager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ();
-		this.scotter = this.gameManager.getScotter ();
+		this.scotter = this.GetComponent<Scooter> ();
 		this.scotterRigidbody = this.GetComponent<Rigidbody> ();
 	}
 			
-	void Update ()
+	void FixedUpdate ()
 	{
-		Vector3 input = getMoveInput ();
-		handleGasPush (input.z);
-		handleSteerRotation (input.x);
-		handleBrakePush ();
+		if (this.scotter != null && this.scotter.hasRider ()) {
+			this.scotterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
+			Vector3 input = getMoveInput ();
+			handleGasPush (input.z);
+			handleSteerRotation (input.x);
+			handleBrakePush ();
+		} else {
+			this.scotterRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+
+		}	
 	}
 
 
@@ -56,14 +63,18 @@ public class ScotterController : MonoBehaviour
 
 	private void handleGasPush (float push)
 	{
-			applyVelocity (push);
+		applyVelocity (push);
+
 	}
 
 	void rotateSteerVisually ()
 	{
-		Transform stearingTrans = stearing.transform;
-		stearingTrans.localEulerAngles = new Vector3 (stearingTrans.localEulerAngles.x, frontWheel.steerAngle, stearingTrans.localEulerAngles.z);
-		//stearingTrans.Rotate (0, frontWheel.rpm / 60 * 360 * Time.deltaTime, 0);
+		if (stearing != null) {
+			Transform stearingTrans = stearing.transform;
+			stearingTrans.localEulerAngles = new Vector3 (stearingTrans.localEulerAngles.x, frontWheel.steerAngle, stearingTrans.localEulerAngles.z);
+			//stearingTrans.Rotate (0, frontWheel.rpm / 60 * 360 * Time.deltaTime, 0);
+		}
+
 	}
 
 	private void handleSteerRotation (float angle)
