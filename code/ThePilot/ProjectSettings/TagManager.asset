@@ -7,6 +7,12 @@ TagManager:
   - DeathZone
   - Road
   - Scooter
+  - SpeedMonitor
+  - BrakeMonitor
+  - Lives
+  - Message
+  - Address
+  - LevelManager
   layers:
   - Default
   - TransparentFX

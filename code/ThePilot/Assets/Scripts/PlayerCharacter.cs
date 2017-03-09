@@ -43,9 +43,10 @@ public class PlayerCharacter : ThirdPersonCharacter {
 	}
 
 	public void JumpOffScooter(){
-		this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+		/*if(this.m_Rigidbody != null)
+			this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
 		transform.parent = null;
-		this.m_Animator.SetBool("Riding", false);
+		this.m_Animator.SetBool("Riding", false);*/
 
 	}
 

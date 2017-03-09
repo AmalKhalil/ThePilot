@@ -47,8 +47,8 @@ public class ScotterController : MonoBehaviour
 	void OnCollisionEnter (Collision collision)
 	{
 		if (collision.gameObject.tag == "DeathZone" || this.IsGrounded () == false) {
-			Destroy(this);
-			this.gameManager.damage ();
+			this.gameManager.LevelLost ();
+			//DestroyObject (this.gameObject);
 		}
 	}
 
