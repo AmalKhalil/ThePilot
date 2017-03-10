@@ -50,5 +50,9 @@ public class PlayerCharacter : ThirdPersonCharacter {
 
 	}
 
+	public bool isOnSeat(){
+		return true;
+	}
+
 
 }

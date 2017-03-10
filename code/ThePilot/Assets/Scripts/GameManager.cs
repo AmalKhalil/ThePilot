@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance = null;
 	public int noOfLifes = 3;
 
-	public bool levelInProgress = false;
-	public int lifes;
+	private bool levelInProgress = false;
+	private int lives;
 
 	// set things up here
 	void Awake () {
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void InitGame(){
-		this.lifes = noOfLifes;
+		this.lives = noOfLifes;
 		this.levelInProgress = true;	
 	}
 		
@@ -37,9 +37,9 @@ public class GameManager : MonoBehaviour {
 
 	public void LevelLost(){
 		if (this.levelInProgress) {
-			if (this.lifes > 0) {
+			if (this.lives > 0) {
 				this.levelInProgress = false;
-				this.lifes = this.lifes-1;
+				this.lives = this.lives-1;
 				getLevelManager().LevelLost ();
 				this.Invoke ("NewGame", 2);
 			}
@@ -60,6 +60,14 @@ public class GameManager : MonoBehaviour {
 	private void NewGame(){
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		this.levelInProgress = true;
+	}
+
+	public int getCurrentLives(){
+		return this.lives;
+	}
+
+	public bool isLevelInProgress(){
+		return this.levelInProgress;
 	}
 
 

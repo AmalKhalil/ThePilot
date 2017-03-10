@@ -6,8 +6,8 @@ using System;
 
 public class LevelManager : MonoBehaviour {
 
-	public GameObject destination;
-	public GameObject playAgain;
+	private GameObject destination;
+	private Address address;
 
 	private GameManager gameManager;
 
@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour {
 	private Text addressText;
 	private Text brakeText;
 	private Text noOfLivesText;
+	private GameObject playAgain;
 
 	// Use this for initialization
 	void Start () {
@@ -27,13 +28,17 @@ public class LevelManager : MonoBehaviour {
 		this.addressText = GameObject.FindGameObjectWithTag ("Address").GetComponent<Text> ();
 		this.brakeText = GameObject.FindGameObjectWithTag ("BrakeMonitor").GetComponent<Text> ();
 		this.noOfLivesText = GameObject.FindGameObjectWithTag ("Lives").GetComponent<Text> ();
-		this.noOfLivesText.text = "Lifes :" + gameManager.lifes;
+		this.playAgain = GameObject.FindGameObjectWithTag ("PlayAgain");
+		this.noOfLivesText.text = "Lifes :" + gameManager.getCurrentLives();
+
+		generateAddress ();
+		this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameManager.levelInProgress) {
+		if (gameManager.isLevelInProgress()) {
 			this.speedText.text = Math.Round (this.scooter.getVelocityInKm ()) + " KM/H";
 			if (this.scooter.getBrakeTorque () > 0) {
 				this.brakeText.text = "Brake On";
@@ -68,5 +73,12 @@ public class LevelManager : MonoBehaviour {
 	public void showMessage(String message){
 		this.addressText.text = message;
 		this.addressText.color = Color.red;
+	}
+
+	private void generateAddress(){
+		Address [] buildings = (Address [])GameObject.FindObjectsOfType (typeof(Address));
+		float length = (float)buildings.Length;
+		this.address = buildings [(int)UnityEngine.Random.Range (0f, length)];
+		this.destination = this.address.gameObject;
 	}
 }
