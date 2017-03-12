@@ -30,8 +30,10 @@ public class LevelManager : MonoBehaviour {
 		this.noOfLivesText = GameObject.FindGameObjectWithTag ("Lives").GetComponent<Text> ();
 		this.playAgain = GameObject.FindGameObjectWithTag ("PlayAgain");
 		this.noOfLivesText.text = "Lifes :" + gameManager.getCurrentLives();
-
-		generateAddress ();
+		if(this.playAgain != null)
+			this.playAgain.SetActive(false);
+		
+		generateAddress (Address.Area.ZoneARight);
 		this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
 
 	}
@@ -49,7 +51,7 @@ public class LevelManager : MonoBehaviour {
 			}
 
 			float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
-
+			//Debug.Log ("Distance to target : "+distance);
 			if (distance < 25 & this.scooter.getVelocityInKm () < 20) {
 				this.addressText.text = "You are there. Congratulation!!!";
 				this.addressText.color = Color.red;
@@ -60,9 +62,9 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void LevelLost(){
-			this.playerCharacter.JumpOffScooter();
 			this.addressText.text = "Oooops, You Lost!";
 			this.addressText.color = Color.red;
+			this.playerCharacter.JumpOffScooter();
 	}
 
 	public void GameOver(){
@@ -75,10 +77,16 @@ public class LevelManager : MonoBehaviour {
 		this.addressText.color = Color.red;
 	}
 
-	private void generateAddress(){
+	private void generateAddress(Address.Area pArea){
 		Address [] buildings = (Address [])GameObject.FindObjectsOfType (typeof(Address));
 		float length = (float)buildings.Length;
-		this.address = buildings [(int)UnityEngine.Random.Range (0f, length)];
-		this.destination = this.address.gameObject;
+		while (this.address == null) {
+			int record = (int)UnityEngine.Random.Range (0f, 40f);
+			if (buildings [record].area.Equals (pArea)) {
+				this.address = buildings [record];
+				this.destination = this.address.gameObject;
+			}
+		}
+
 	}
 }

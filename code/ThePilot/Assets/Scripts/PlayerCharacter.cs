@@ -8,6 +8,13 @@ public class PlayerCharacter : ThirdPersonCharacter {
 	public GameObject m_scooter;
 	private float time =  10;
 
+	void OnCollisionEnter (Collision collision)
+	{
+		if (collision.gameObject.tag.Equals("Road")) {
+			this.JumpOffScooter ();
+		}
+	}
+
 
 	public bool MoveToScooter(Vector3 pCameraForward){
 		Vector3 target = m_scooter.transform.position;
@@ -39,20 +46,26 @@ public class PlayerCharacter : ThirdPersonCharacter {
 		this.transform.position = m_scooter.GetComponent<Scooter>().getSeatWaypoint().transform.position;
 
 		this.m_Animator.SetBool("Riding", true);
+
+		//Freeze Postion
 		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition; 
 	}
 
 	public void JumpOffScooter(){
-		/*if(this.m_Rigidbody != null)
-			this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+		//Remove Scooter as parent
 		transform.parent = null;
-		this.m_Animator.SetBool("Riding", false);*/
+
+		//Change Capsule 
+		this.m_Capsule.height = this.m_Capsule.height * 4f;
+		this.m_Capsule.center =  this.m_Capsule.center + (Vector3.up * 0.3f) ;
+
+		//Free Postion
+		this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+		this.m_Animator.SetBool("Riding", false);
+		this.Move (Vector3.forward, false, false);
 
 	}
-
-	public bool isOnSeat(){
-		return true;
-	}
+		
 
 
 }

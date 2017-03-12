@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour {
 				this.levelInProgress = false;
 				this.lives = this.lives-1;
 				getLevelManager().LevelLost ();
-				this.Invoke ("NewGame", 2);
+				this.Invoke ("NewGame", 4);
 			}
 			else
 			{
