@@ -45,10 +45,14 @@ public class PlayerCharacter : ThirdPersonCharacter {
 		//Ride scooter
 		this.transform.position = m_scooter.GetComponent<Scooter>().getSeatWaypoint().transform.position;
 
+		this.m_IsGrounded = false;
 		this.m_Animator.SetBool("Riding", true);
+		this.m_Animator.SetBool("OnGround", false);
+
 
 		//Freeze Postion
 		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition; 
+
 	}
 
 	public void JumpOffScooter(){
@@ -61,8 +65,15 @@ public class PlayerCharacter : ThirdPersonCharacter {
 
 		//Free Postion
 		this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+
+		this.m_IsGrounded = true;
 		this.m_Animator.SetBool("Riding", false);
-		this.Move (Vector3.forward, false, false);
+		this.m_Animator.SetBool("OnGround", true);
+		this.m_Animator.SetFloat("Forward", 0.2f, 0.1f, Time.deltaTime);
+		this.m_Animator.SetFloat("Turn", 0.2f, 0.1f, Time.deltaTime);
+
+	
+		this.Move (Vector3.forward, false, true);
 
 	}
 		

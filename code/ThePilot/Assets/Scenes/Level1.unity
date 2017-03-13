@@ -92,6 +92,11 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &38961757 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4174206284702560, guid: 5ab66e8aca26c40bca84468c9cef7ee8,
+    type: 2}
+  m_PrefabInternal: {fileID: 2093695223}
 --- !u!1 &202464130
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,9 +180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f76806479d916a64aa03f8e3eba7912f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 673018539}
-  distance: 10
-  height: 5
+  target: {fileID: 38961757}
+  distance: 7
+  height: 6
   rotationDamping: 0
   heightDamping: 0
 --- !u!114 &259998527
@@ -500,11 +505,6 @@ Canvas:
 --- !u!1 &673018533 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1976600139520604, guid: 38cdde1b5df80437ba4c3f4361fcc86f,
-    type: 2}
-  m_PrefabInternal: {fileID: 839778732}
---- !u!4 &673018539 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4359746952769532, guid: 38cdde1b5df80437ba4c3f4361fcc86f,
     type: 2}
   m_PrefabInternal: {fileID: 839778732}
 --- !u!1 &754111405
