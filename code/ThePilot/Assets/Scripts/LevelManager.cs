@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -33,7 +34,7 @@ public class LevelManager : MonoBehaviour {
 		if(this.playAgain != null)
 			this.playAgain.SetActive(false);
 		
-		generateAddress (Address.Area.ZoneARight);
+		this.GenerateAddress (Address.Area.ZoneARight);
 		this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
 
 	}
@@ -57,6 +58,8 @@ public class LevelManager : MonoBehaviour {
 				this.addressText.color = Color.red;
 				this.playAgain.SetActive (true);
 			}
+			this.FindGPSRoute ();
+
 
 		}
 	}
@@ -77,7 +80,7 @@ public class LevelManager : MonoBehaviour {
 		this.addressText.color = Color.red;
 	}
 
-	private void generateAddress(Address.Area pArea){
+	private void GenerateAddress(Address.Area pArea){
 		Address [] buildings = (Address [])GameObject.FindObjectsOfType (typeof(Address));
 		float length = (float)buildings.Length;
 		while (this.address == null) {
@@ -89,4 +92,18 @@ public class LevelManager : MonoBehaviour {
 		}
 
 	}
+
+	private void FindGPSRoute(){
+
+		//Vector3 path = this.destination.transform.position - this.scooter.gameObject.transform.position;
+		NavMeshPath path = new NavMeshPath();
+		NavMesh.CalculatePath(this.scooter.gameObject.transform.position, this.destination.transform.position, NavMesh.AllAreas, path);
+		for (int i = 0; i < path.corners.Length - 1; i++) {
+			Debug.DrawLine (path.corners [i], path.corners [i + 1], Color.red);
+		}
+
+
+	}
+
+
 }
