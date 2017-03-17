@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour {
 		
 		this.GenerateAddress (Address.Area.ZoneARight);
 		this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
-
+		this.DrawGPSRoute ();
 	}
 	
 	// Update is called once per frame
@@ -58,7 +58,7 @@ public class LevelManager : MonoBehaviour {
 				this.addressText.color = Color.red;
 				this.playAgain.SetActive (true);
 			}
-			this.FindGPSRoute ();
+
 
 
 		}
@@ -93,16 +93,17 @@ public class LevelManager : MonoBehaviour {
 
 	}
 
-	private void FindGPSRoute(){
-
-		//Vector3 path = this.destination.transform.position - this.scooter.gameObject.transform.position;
+	private void DrawGPSRoute(){
 		NavMeshPath path = new NavMeshPath();
-		NavMesh.CalculatePath(this.scooter.gameObject.transform.position, this.destination.transform.position, NavMesh.AllAreas, path);
-		for (int i = 0; i < path.corners.Length - 1; i++) {
-			Debug.DrawLine (path.corners [i], path.corners [i + 1], Color.red);
+		NavMesh.CalculatePath(this.scooter.gameObject.transform.position, this.destination.transform.position, 1, path);
+		LineRenderer line = this.gameObject.AddComponent<LineRenderer>();;
+		line.material = new Material( Shader.Find( "Sprites/Default" ) ) { color = Color.yellow };
+		line.SetWidth( 20f, 20f );
+		line.SetColors( Color.yellow, Color.yellow );line.SetVertexCount (path.corners.Length);
+		for (int i = 0; i < path.corners.Length; i++) {
+			line.SetPosition(i, path.corners[i]);
+			//Debug.DrawLine (path.corners [i], path.corners [i + 1], Color.red);
 		}
-
-
 	}
 
 
