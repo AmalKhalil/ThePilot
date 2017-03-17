@@ -7,6 +7,13 @@ TagManager:
   - DeathZone
   - Road
   - Scooter
+  - SpeedMonitor
+  - BrakeMonitor
+  - Lives
+  - Message
+  - Address
+  - LevelManager
+  - PlayAgain
   layers:
   - Default
   - TransparentFX
@@ -16,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - GPS
   - 
   - 
   - 
@@ -43,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: GPS
+    uniqueID: 1798015769
     locked: 0

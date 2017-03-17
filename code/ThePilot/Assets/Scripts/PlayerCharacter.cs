@@ -8,6 +8,13 @@ public class PlayerCharacter : ThirdPersonCharacter {
 	public GameObject m_scooter;
 	private float time =  10;
 
+	void OnCollisionEnter (Collision collision)
+	{
+		if (collision.gameObject.tag.Equals("Road")) {
+			this.JumpOffScooter ();
+		}
+	}
+
 
 	public bool MoveToScooter(Vector3 pCameraForward){
 		Vector3 target = m_scooter.transform.position;
@@ -38,16 +45,38 @@ public class PlayerCharacter : ThirdPersonCharacter {
 		//Ride scooter
 		this.transform.position = m_scooter.GetComponent<Scooter>().getSeatWaypoint().transform.position;
 
+		this.m_IsGrounded = false;
 		this.m_Animator.SetBool("Riding", true);
+		this.m_Animator.SetBool("OnGround", false);
+
+
+		//Freeze Postion
 		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition; 
+
 	}
 
 	public void JumpOffScooter(){
-		this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+		//Remove Scooter as parent
 		transform.parent = null;
+
+		//Change Capsule 
+		this.m_Capsule.height = this.m_Capsule.height * 4f;
+		this.m_Capsule.center =  this.m_Capsule.center + (Vector3.up * 0.3f) ;
+
+		//Free Postion
+		this.m_Rigidbody.constraints = RigidbodyConstraints.None; 
+
+		this.m_IsGrounded = true;
 		this.m_Animator.SetBool("Riding", false);
+		this.m_Animator.SetBool("OnGround", true);
+		this.m_Animator.SetFloat("Forward", 0.2f, 0.1f, Time.deltaTime);
+		this.m_Animator.SetFloat("Turn", 0.2f, 0.1f, Time.deltaTime);
+
+	
+		this.Move (Vector3.forward, false, true);
 
 	}
+		
 
 
 }

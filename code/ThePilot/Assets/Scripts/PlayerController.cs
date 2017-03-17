@@ -51,40 +51,46 @@ public class PlayerController : MonoBehaviour {
 	// Fixed update is called in sync with physics
 	private void FixedUpdate()
 	{
-		if (this.scotter != null && !this.scotter.hasRider ()) {
-			// read inputs
-			float h = CrossPlatformInputManager.GetAxis ("Horizontal");
-			float v = CrossPlatformInputManager.GetAxis ("Vertical");
-	
-			if (m_Cam != null) {
-				// calculate camera relative direction to move:
-				m_CamForward = Vector3.Scale (m_Cam.forward, new Vector3 (1, 0, 1)).normalized;
-				m_Move = v * m_CamForward + h * m_Cam.right;
-			} else {
-				// we use world-relative directions in the case of no main camera
-				m_Move = v * Vector3.forward + h * Vector3.right;
-			}
-
-			#if !MOBILE_INPUT
-			// walk speed multiplier
-			if (Input.GetKey (KeyCode.LeftShift))
-				m_Move *= 0.5f;
-			#endif
-
-			// pass all parameters to the character control script
-			if (m_Jump) {
-				if (m_Character.MoveToScooter (m_CamForward)) {
-					m_Character.JumpOnScooter (m_CamForward);
-					this.scotter.sethasRider (true);
-					m_Jump = false;
-				}
-			} else {
-				m_Character.Move (m_Move, false, false);
-			}
-
-
-
+		if (this.scotter.hasRider ()) {
+			
+		} 
+		else  
+		{
+			movePlayer ();
 		}
+
+   }
+
+ private void movePlayer ()
+{
+	// read inputs
+	float h = CrossPlatformInputManager.GetAxis ("Horizontal");
+	float v = CrossPlatformInputManager.GetAxis ("Vertical");
+	if (m_Cam != null) {
+		// calculate camera relative direction to move:
+		m_CamForward = Vector3.Scale (m_Cam.forward, new Vector3 (1, 0, 1)).normalized;
+		m_Move = v * m_CamForward + h * m_Cam.right;
+	}
+	else {
+		// we use world-relative directions in the case of no main camera
+		m_Move = v * Vector3.forward + h * Vector3.right;
+	}
+	#if !MOBILE_INPUT
+	// walk speed multiplier
+	if (Input.GetKey (KeyCode.LeftShift))
+		m_Move *= 0.5f;
+	#endif
+	// pass all parameters to the character control script
+	if (m_Jump) {
+		if (m_Character.MoveToScooter (m_CamForward)) {
+			m_Character.JumpOnScooter (m_CamForward);
+			this.scotter.sethasRider (true);
+			m_Jump = false;
+		}
+	}
+	else {
+		m_Character.Move (m_Move, false, false);
 	}
 }
 
+}

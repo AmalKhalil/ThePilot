@@ -7,88 +7,67 @@ using System;
 public class GameManager : MonoBehaviour {
 
 	// static reference to game manager so can be called from other scripts directly (not just through gameobject component)
-	public static GameManager gm;
-
+	public static GameManager instance = null;
 	public int noOfLifes = 3;
 
-	public GameObject mainCamera;
-
-	public GameObject scotterObject;
-	public GameObject playerObject;
-	public GameObject destination;
-
-	public Text speedText;
-	public Text addressText;
-	public Text brakeText;
-	public Text noOfLivesText;
-
-	public GameObject playAgain;
-
-	private Scooter scooter;
-	private PlayerCharacter playerCharacter;
-	private Boolean isPlaying = true;
-	private int lifes;
+	private bool levelInProgress = false;
+	private int lives;
 
 	// set things up here
 	void Awake () {
-		// setup reference to game manager
-		if (gm == null)
-			gm = this.GetComponent<GameManager>();
+		
+		//Check if instance already exists
+		if (instance == null) {
+			instance = this;
+			DontDestroyOnLoad (gameObject);
+		} else if (instance != this) {
+			Destroy (gameObject); 
+		}
+		this.InitGame ();
 
-		this.scooter = scotterObject.GetComponent<Scooter> ();
-		this.playerCharacter = playerObject.GetComponent<PlayerCharacter> ();
-		this.lifes = noOfLifes;
-		this.noOfLivesText.text = "Lifes :" + this.lifes;
+	}
+
+	void InitGame(){
+		this.lives = noOfLifes;
+		this.levelInProgress = true;	
 	}
 		
-	// Update is called once per frame
-	void Update () {
-		if (isPlaying) {
-			speedText.text = Math.Round (scooter.getVelocityInKm ()) + " KM/H";
-			if (scooter.getBrakeTorque () > 0) {
-				brakeText.text = "Brake On";
-				brakeText.color = Color.red;
-			} else {
-				brakeText.text = "Brake Off";
-				brakeText.color = Color.white;
+
+
+
+	public void LevelLost(){
+		if (this.levelInProgress) {
+			if (this.lives > 0) {
+				this.levelInProgress = false;
+				this.lives = this.lives-1;
+				getLevelManager().LevelLost ();
+				this.Invoke ("NewGame", 10);
+			}
+			else
+			{
+				getLevelManager().GameOver();
 			}
 		}
-		float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
-
-		if (distance < 25 & this.scooter.getVelocityInKm() < 20) {
-			this.addressText.text = "You are there. Congratulation!!!";
-			this.addressText.color = Color.red;
-			this.playAgain.SetActive (true);
-		}
-			
 
 	}
+		
 
+	private LevelManager getLevelManager(){
 
-	public void damage(){
-		//if (this.lifes > 0) {
-		this.playerCharacter.JumpOffScooter();
-			this.addressText.text = "Oooops, You Lost!";
-			this.addressText.color = Color.red;
-			this.lifes = this.lifes-1;
-			this.noOfLivesText.text = "Lifes :" + this.lifes;
-			this.playAgain.SetActive (true);
-		//	this.Invoke ("reLoadGame", 2);
-		/*}
-		else
-		{
-			gameOver();
-		}*/
-	}
-	public void gameOver(){
-		Debug.logger.Log ("Game Over !!!!!");
-		isPlaying = false;
-		this.addressText.text = "GameOver!";
-		this.addressText.color = Color.red;
+		return GameObject.FindGameObjectWithTag ("LevelManager").GetComponent<LevelManager> ();
 	}
 
-	public void reLoadGame(){
+	private void NewGame(){
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		this.levelInProgress = true;
+	}
+
+	public int getCurrentLives(){
+		return this.lives;
+	}
+
+	public bool isLevelInProgress(){
+		return this.levelInProgress;
 	}
 
 

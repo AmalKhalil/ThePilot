@@ -6,14 +6,23 @@ using System;
 public class Scooter : MonoBehaviour{
 
 	public GameObject SeatWaypoint;
-	private float velocity;
-	private float steeringAngle;
-	private float brakeTorque;
+
+	private Rigidbody scotterRigidbody;
+	private WheelCollider frontWheel;
+
 	private bool hasRiderOnIt= false;
+
+	public void setRigidbody(Rigidbody mRigidbody){
+		this.scotterRigidbody = mRigidbody;
+	}
+
+	public void setFrontWheel(WheelCollider mWheel){
+		this.frontWheel = mWheel;
+	}
 
 	public float getVelocity ()
 	{
-		return this.velocity;
+		return this.scotterRigidbody.velocity.magnitude;
 	}
 
 	public double getVelocityInKm ()
@@ -23,12 +32,12 @@ public class Scooter : MonoBehaviour{
 
 	public float getSteerAngle ()
 	{
-		return this.steeringAngle;
+		return this.frontWheel.steerAngle;
 	}
 
 	public float getBrakeTorque ()
 	{
-		return this.brakeTorque;
+		return this.frontWheel.brakeTorque;
 	}
 
 	public GameObject getSeatWaypoint ()
@@ -40,21 +49,7 @@ public class Scooter : MonoBehaviour{
 	{
 		return this.hasRiderOnIt;
 	}
-		
-	public void setVelocity (float pVelocity)
-	{
-		this.velocity = pVelocity;
-	}
 
-	public void setSteerAngle (float pSteerAngle)
-	{
-		this.steeringAngle =pSteerAngle;
-	}
-
-	public void setBrakeTorque (float pBrakeTorque)
-	{
-		this.brakeTorque =pBrakeTorque;
-	}
 
 	public void sethasRider (bool pHasRider)
 	{
