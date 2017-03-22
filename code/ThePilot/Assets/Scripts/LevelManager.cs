@@ -35,8 +35,10 @@ public class LevelManager : MonoBehaviour {
 			this.playAgain.SetActive(false);
 		
 		this.GenerateAddress (Address.Area.ZoneARight);
-		this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
-		this.DrawGPSRoute ();
+		if(this.address != null){
+			this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
+			this.DrawGPSRoute ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -51,14 +53,15 @@ public class LevelManager : MonoBehaviour {
 				this.brakeText.color = Color.white;
 			}
 
-			float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
-			//Debug.Log ("Distance to target : "+distance);
-			if (distance < 25 & this.scooter.getVelocityInKm () < 20) {
-				this.addressText.text = "You are there. Congratulation!!!";
-				this.addressText.color = Color.red;
-				this.playAgain.SetActive (true);
+			if (this.destination != null) {
+				float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
+				//Debug.Log ("Distance to target : "+distance);
+				if (distance < 25 & this.scooter.getVelocityInKm () < 20) {
+					this.addressText.text = "You are there. Congratulation!!!";
+					this.addressText.color = Color.red;
+					this.playAgain.SetActive (true);
+				}
 			}
-
 
 
 		}
@@ -83,9 +86,9 @@ public class LevelManager : MonoBehaviour {
 	private void GenerateAddress(Address.Area pArea){
 		Address [] buildings = (Address [])GameObject.FindObjectsOfType (typeof(Address));
 		float length = (float)buildings.Length;
-		while (this.address == null) {
+		while (length != 0 && this.address == null) {
 			int record = (int)UnityEngine.Random.Range (0f, 40f);
-			if (buildings [record].area.Equals (pArea)) {
+			if (record < length && buildings [record].area.Equals (pArea)) {
 				this.address = buildings [record];
 				this.destination = this.address.gameObject;
 			}
