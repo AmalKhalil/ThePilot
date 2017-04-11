@@ -14,7 +14,8 @@ public class Address : MonoBehaviour  {
 
 	public enum Street 
 	{
-		FalakyStreet, TalatHarbStreet, ElBustanStreet, KasrElNil, MeretBasha, TahrirStreet
+		FalakyStreet, TalatHarbStreet, ElBustanStreet, KasrElNil, MeretBasha, TahrirStreet, MMSA, SherifBasha, MohamedMahmoud
+
 	}
 
 	public enum Area 
