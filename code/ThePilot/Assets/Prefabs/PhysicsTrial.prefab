@@ -274,10 +274,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f82b38b884734f8f84cba5a790099c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motorForce: 800
-  steerForce: 30
-  brakeForce: 120
-  maxLowVelocity: 30
+  steerMax: 20
+  motorMax: 800
+  brakeMax: 8000
   frontWheel: {fileID: 146754988772015776}
   rearWheel: {fileID: 146329003267214552}
   stearing: {fileID: 0}

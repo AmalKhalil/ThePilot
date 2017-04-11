@@ -7,6 +7,8 @@ using System;
 
 public class LevelManager : MonoBehaviour {
 
+	public Address.Area area = Address.Area.Tahrir;
+
 	private GameObject destination;
 	private Address address;
 
@@ -34,9 +36,9 @@ public class LevelManager : MonoBehaviour {
 		if(this.playAgain != null)
 			this.playAgain.SetActive(false);
 		
-		this.GenerateAddress (Address.Area.ZoneARight);
+		this.GenerateAddress (area);
 		if(this.address != null){
-			this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.Street + " - " + this.address.area;
+			this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.street + " - " + this.address.area;
 			this.DrawGPSRoute ();
 		}
 	}
@@ -85,10 +87,10 @@ public class LevelManager : MonoBehaviour {
 
 	private void GenerateAddress(Address.Area pArea){
 		Address [] buildings = (Address [])GameObject.FindObjectsOfType (typeof(Address));
-		float length = (float)buildings.Length;
+		float length = (float) buildings.Length;
 		while (length != 0 && this.address == null) {
-			int record = (int)UnityEngine.Random.Range (0f, 40f);
-			if (record < length && buildings [record].area.Equals (pArea)) {
+			int record = (int)UnityEngine.Random.Range (0f, length);
+			if (buildings [record].area.Equals (pArea)) {
 				this.address = buildings [record];
 				this.destination = this.address.gameObject;
 			}
@@ -101,8 +103,11 @@ public class LevelManager : MonoBehaviour {
 		NavMesh.CalculatePath(this.scooter.gameObject.transform.position, this.destination.transform.position, 1, path);
 		LineRenderer line = this.gameObject.AddComponent<LineRenderer>();;
 		line.material = new Material( Shader.Find( "Sprites/Default" ) ) { color = Color.yellow };
-		line.SetWidth( 20f, 20f );
-		line.SetColors( Color.yellow, Color.yellow );line.SetVertexCount (path.corners.Length);
+		line.startWidth = 5f;
+		line.endWidth =5f;
+		line.startColor = Color.yellow;
+		line.startColor = Color.yellow;
+		line.numPositions = path.corners.Length;
 		for (int i = 0; i < path.corners.Length; i++) {
 			line.SetPosition(i, path.corners[i]);
 			//Debug.DrawLine (path.corners [i], path.corners [i + 1], Color.red);

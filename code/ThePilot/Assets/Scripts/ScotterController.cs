@@ -78,7 +78,6 @@ public class ScotterController : MonoBehaviour
 
 	private void HandleGasPush (float push)
 	{
-		float motor = 0;
 		float forward = Mathf.Clamp(push, -1, 1);
 
 		//Change motor torque for rear wheel
