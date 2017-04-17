@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour {
 		this.GenerateAddress (area);
 		if(this.address != null){
 			this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.street + " - " + this.address.area;
-			this.DrawGPSRoute ();
+			this.DrawGPSRoute (this.scooter.gameObject, this.destination);
 		}
 	}
 	
@@ -98,9 +98,9 @@ public class LevelManager : MonoBehaviour {
 
 	}
 
-	private void DrawGPSRoute(){
+	private void DrawGPSRoute(GameObject pStart,GameObject pDestination){
 		NavMeshPath path = new NavMeshPath();
-		NavMesh.CalculatePath(this.scooter.gameObject.transform.position, this.destination.transform.position, 1, path);
+		NavMesh.CalculatePath(pStart.transform.position, pDestination.transform.position, 1, path);
 		LineRenderer line = this.gameObject.AddComponent<LineRenderer>();;
 		line.material = new Material( Shader.Find( "Sprites/Default" ) ) { color = Color.yellow };
 		line.startWidth = 5f;
@@ -108,11 +108,13 @@ public class LevelManager : MonoBehaviour {
 		line.startColor = Color.yellow;
 		line.startColor = Color.yellow;
 		line.numPositions = path.corners.Length;
+		if(path.corners.Length == 0)
+			Debug.LogWarning ("Path not found: ");
+
 		for (int i = 0; i < path.corners.Length; i++) {
 			line.SetPosition(i, path.corners[i]);
-			//Debug.DrawLine (path.corners [i], path.corners [i + 1], Color.red);
 		}
 	}
-
+		
 
 }
