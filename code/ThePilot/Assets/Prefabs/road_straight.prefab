@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4098508855201198}
   - component: {fileID: 33960922425778336}
   - component: {fileID: 23458867524708482}
-  - component: {fileID: 64130599293889952}
   m_Layer: 8
   m_Name: GPS
   m_TagString: Untagged
@@ -53,9 +52,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837206745297982}
-  m_LocalRotation: {x: -0, y: 0.64297473, z: -0, w: 0.76588744}
-  m_LocalPosition: {x: 0.14330004, y: 0, z: -0.026900036}
-  m_LocalScale: {x: 0.06629314, y: 0.130305, z: 0.08211924}
+  m_LocalRotation: {x: -0.54156417, y: 0.45465177, z: -0.45465177, w: 0.54156417}
+  m_LocalPosition: {x: -0.3487, y: -0.026900018, z: 0}
+  m_LocalScale: {x: 0.06629309, y: 0.13030496, z: 0.08211922}
   m_Children:
   - {fileID: 4098508855201198}
   m_Father: {fileID: 0}
@@ -149,20 +148,6 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1786560977825834}
-  m_Mesh: {fileID: 4300010, guid: 10900ec9ea3fc69459c3f2bb3d09ed70, type: 3}
---- !u!64 &64130599293889952
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1786560977825834}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300010, guid: 10900ec9ea3fc69459c3f2bb3d09ed70, type: 3}
 --- !u!64 &64140465352119448
 MeshCollider:
