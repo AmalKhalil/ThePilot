@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   number: 2
+  color: 0
 --- !u!212 &212091181358921096
 SpriteRenderer:
   m_ObjectHideFlags: 1

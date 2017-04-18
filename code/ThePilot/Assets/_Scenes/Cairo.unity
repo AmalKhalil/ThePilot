@@ -22560,6 +22560,11 @@ Prefab:
       propertyPath: number
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114009939977245222, guid: b73341fc8a98c4bdd9350a15a3eabf39,
+        type: 2}
+      propertyPath: color
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b73341fc8a98c4bdd9350a15a3eabf39, type: 2}
   m_IsPrefabParent: 0
