@@ -9,7 +9,7 @@ public class ScotterController : MonoBehaviour
 
 	public float steerMax = 20f;
 	public float motorMax = 800f;
-	public float brakeMax = 8000f;
+	public float brakeMax = 80000f;
 
 	public WheelCollider frontWheel;
 	public WheelCollider rearWheel;
@@ -42,7 +42,6 @@ public class ScotterController : MonoBehaviour
 
 			HandleGasPush (input.z);
 			HandleSteerRotation (input.x);
-			HandleBrakePush ();
 		} 	
 	}
 		
@@ -79,11 +78,21 @@ public class ScotterController : MonoBehaviour
 	private void HandleGasPush (float push)
 	{
 		float forward = Mathf.Clamp(push, -1, 1);
+		Debug.Log (forward);
 
-		//Change motor torque for rear wheel
-		rearWheel.motorTorque = forward * motorMax;
+		if (forward > 0) 
+		{
+			//Change motor torque for rear wheel
+			rearWheel.motorTorque = forward * motorMax;
+		} 
+		else 
+		{
+			// Add brake force
+			this.rearWheel.brakeTorque = this.frontWheel.brakeTorque = forward * this.brakeMax * -1;
 
-
+			if (this.scotter.getVelocityInKm () == 0)
+				this.StopRotation ();
+		}
 	}
 		
 	private void HandleSteerRotation (float angle)
@@ -96,24 +105,7 @@ public class ScotterController : MonoBehaviour
 		this.frontWheel.steerAngle = steer * steerMax;
 		RotateSteerVisually ();
 	}
-
-
-	private void HandleBrakePush ()
-	{
-		if (this.scotter.getVelocity() != 0 && this.IsBrakePressed ()) {
-			this.rearWheel.brakeTorque = this.brakeMax;
-			this.frontWheel.brakeTorque = this.brakeMax;
-
-			if (this.scotter.getVelocityInKm () == 0)
-				this.StopRotation ();
-		}
-
-		if (this.IsBrakeRelease ()) {
-			this.rearWheel.brakeTorque = 0;
-			this.frontWheel.brakeTorque = 0;
-		}
-
-	}
+		
 		
 	private void RotateSteerVisually ()
 	{
@@ -124,16 +116,6 @@ public class ScotterController : MonoBehaviour
 		}
 	}
 
-
-	private Boolean IsBrakePressed ()
-	{
-		return Input.GetKey (KeyCode.Space);
-	}
-
-	private Boolean IsBrakeRelease ()
-	{
-		return Input.GetKeyUp (KeyCode.Space);
-	}
 
 	private Boolean IsGrounded ()
 	{

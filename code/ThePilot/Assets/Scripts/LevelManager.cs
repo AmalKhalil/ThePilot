@@ -101,19 +101,23 @@ public class LevelManager : MonoBehaviour {
 	private void DrawGPSRoute(GameObject pStart,GameObject pDestination){
 		NavMeshPath path = new NavMeshPath();
 		NavMesh.CalculatePath(pStart.transform.position, pDestination.transform.position, 1, path);
-		LineRenderer line = this.gameObject.AddComponent<LineRenderer>();;
-		line.material = new Material( Shader.Find( "Sprites/Default" ) ) { color = Color.yellow };
-		line.startWidth = 5f;
-		line.endWidth =5f;
-		line.startColor = Color.yellow;
-		line.startColor = Color.yellow;
-		line.numPositions = path.corners.Length;
-		if(path.corners.Length == 0)
+		if (path.corners.Length != 0) {
+			LineRenderer line = this.gameObject.AddComponent<LineRenderer> ();
+			line.material = new Material (Shader.Find ("Sprites/Default")) { color = Color.yellow };
+			line.startWidth = 5f;
+			line.endWidth = 5f;
+			line.startColor = Color.yellow;
+			line.startColor = Color.yellow;
+			line.numPositions = path.corners.Length;
+			for (int i = 0; i < path.corners.Length; i++) {
+				line.SetPosition (i, path.corners [i]);
+			}
+		} 
+		else 
+		{
 			Debug.LogWarning ("Path not found: ");
-
-		for (int i = 0; i < path.corners.Length; i++) {
-			line.SetPosition(i, path.corners[i]);
 		}
+
 	}
 		
 
