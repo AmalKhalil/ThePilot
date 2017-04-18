@@ -78,7 +78,6 @@ public class ScotterController : MonoBehaviour
 	private void HandleGasPush (float push)
 	{
 		float forward = Mathf.Clamp(push, -1, 1);
-		Debug.Log (forward);
 
 		if (forward > 0) 
 		{

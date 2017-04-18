@@ -33,6 +33,9 @@ public class LevelManager : MonoBehaviour {
 		this.noOfLivesText = GameObject.FindGameObjectWithTag ("Lives").GetComponent<Text> ();
 		this.playAgain = GameObject.FindGameObjectWithTag ("PlayAgain");
 		this.noOfLivesText.text = "Lifes :" + gameManager.getCurrentLives();
+
+		enableGPSCamera ();
+
 		if(this.playAgain != null)
 			this.playAgain.SetActive(false);
 		
@@ -119,6 +122,10 @@ public class LevelManager : MonoBehaviour {
 		}
 
 	}
-		
+
+	private void enableGPSCamera(){
+		GameObject.FindGameObjectWithTag("GPSCamera").GetComponent<Camera> ().enabled = false;
+		GameObject.FindGameObjectWithTag("GPSCamera").GetComponent<Camera> ().enabled = true;
+	}
 
 }
