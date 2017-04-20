@@ -109,8 +109,8 @@ public class LevelManager : MonoBehaviour {
 			line.material = new Material (Shader.Find ("Sprites/Default")) { color = Color.yellow };
 			line.startWidth = 5f;
 			line.endWidth = 5f;
-			line.startColor = Color.yellow;
-			line.startColor = Color.yellow;
+			line.startColor = Color.cyan;
+			line.startColor = Color.cyan;
 			line.numPositions = path.corners.Length;
 			for (int i = 0; i < path.corners.Length; i++) {
 				line.SetPosition (i, path.corners [i]);
