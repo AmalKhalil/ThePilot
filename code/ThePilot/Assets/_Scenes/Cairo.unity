@@ -14832,7 +14832,7 @@ GameObject:
   - component: {fileID: 608929004}
   - component: {fileID: 608929003}
   m_Layer: 0
-  m_Name: Sign (2)
+  m_Name: P]art (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14845,10 +14845,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 608929001}
   m_LocalRotation: {x: -0, y: 0.9998067, z: -0, w: -0.019660652}
-  m_LocalPosition: {x: 1.097, y: 2.688, z: 7.56}
-  m_LocalScale: {x: 0.60635066, y: 0.3435573, z: 1}
+  m_LocalPosition: {x: -0.06, y: 2.44, z: 7.44}
+  m_LocalScale: {x: 0.6063507, y: 0.34355733, z: 1}
   m_Children: []
-  m_Father: {fileID: 730038879}
+  m_Father: {fileID: 1107376025}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 182.25299, z: 0}
 --- !u!102 &608929003
@@ -14862,8 +14862,8 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
+  m_Anchor: 4
+  m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
@@ -27895,6 +27895,36 @@ Transform:
   m_PrefabParentObject: {fileID: 4045993360665806, guid: e420e0a2719954252919aba8a4c8a834,
     type: 2}
   m_PrefabInternal: {fileID: 1104084444}
+--- !u!1 &1107376024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1107376025}
+  m_Layer: 0
+  m_Name: Sign
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1107376025
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1107376024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1800779118}
+  - {fileID: 608929002}
+  m_Father: {fileID: 730038879}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109032639
 GameObject:
   m_ObjectHideFlags: 0
@@ -45866,7 +45896,7 @@ GameObject:
   - component: {fileID: 1800779120}
   - component: {fileID: 1800779119}
   m_Layer: 0
-  m_Name: Sign (1)
+  m_Name: Part (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45879,10 +45909,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1800779117}
   m_LocalRotation: {x: -0, y: 0.9998067, z: -0, w: -0.019660652}
-  m_LocalPosition: {x: 4.15, y: 2.72, z: 7.26}
-  m_LocalScale: {x: 0.6071946, y: 0.34355703, z: 1.0013902}
+  m_LocalPosition: {x: 2.99, y: 2.47, z: 7.37}
+  m_LocalScale: {x: 0.6071947, y: 0.34355706, z: 1.0013902}
   m_Children: []
-  m_Father: {fileID: 730038879}
+  m_Father: {fileID: 1107376025}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 182.25299, z: 0}
 --- !u!102 &1800779119
@@ -45896,8 +45926,8 @@ TextMesh:
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
+  m_Anchor: 4
+  m_Alignment: 1
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
