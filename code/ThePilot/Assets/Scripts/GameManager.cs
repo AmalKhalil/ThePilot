@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 		return GameObject.FindGameObjectWithTag ("LevelManager").GetComponent<LevelManager> ();
 	}
 
-	private void NewGame(){
+	public void NewGame(){
 		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		this.levelInProgress = true;
 	}
