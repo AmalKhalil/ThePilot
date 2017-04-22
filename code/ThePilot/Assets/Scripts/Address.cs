@@ -6,20 +6,26 @@ using UnityEngine;
 public class Address : MonoBehaviour  {
 
 	public int no;
-	public String Street; 
+	public Street street; 
 	public Area area;
 	public BuildingType buildingType;
 
 	private Customer customer;
 
+	public enum Street 
+	{
+		FalakyStreet, TalatHarbStreet, ElBustanStreet, KasrElNil, MeretBasha, TahrirStreet, MMSA, SherifBasha, MohamedMahmoud
+
+	}
+
 	public enum Area 
 	{
-		ZoneARight, ZoneALeft, ZoneC
+		Tahrir , ZoneARight, ZoneALeft, ZoneC
 	}
 
 	public enum BuildingType 
 	{
-		Cafe, Motel, FlatLarge, Pharmacy, Shop, GasStation, Skyscraper, Stadium, House, Tramstation, Bank
+		Flat, Cafe, Motel, FlatLarge, Pharmacy, Shop, GasStation, Skyscraper, Stadium, House, Tramstation, Bank
 	}
 
 	public void setCustomer(Customer pCustomer){

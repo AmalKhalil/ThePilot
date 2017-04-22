@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 public class PlayerCharacter : ThirdPersonCharacter {
 
 	public GameObject m_scooter;
-	private float time =  10;
 
 	void OnCollisionEnter (Collision collision)
 	{
@@ -18,22 +18,21 @@ public class PlayerCharacter : ThirdPersonCharacter {
 
 	public bool MoveToScooter(Vector3 pCameraForward){
 		Vector3 target = m_scooter.transform.position;
+	
 		Vector3 move = Vector3.MoveTowards (this.transform.position, target, 2f) - this.transform.position ;
 		this.Move (move , false, false);
 
 		float distance = Vector3.Distance (transform.position, target);
-		if (distance <= 2f) {
+		if (distance <= 3f) {
 			return true;
 		} else {
 			return false;
 		}
-
 	}
 
 	public void JumpOnScooter(Vector3 pCameraForward){
-
-		//Look to Camera
-		this.transform.LookAt (pCameraForward);
+		//Look to Scooter
+		//this.transform.LookAt (m_scooter.transform.forward);
 
 		//Set Scooter as parent
 		transform.parent = m_scooter.transform;
