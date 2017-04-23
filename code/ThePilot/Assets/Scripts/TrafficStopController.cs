@@ -58,10 +58,15 @@ public class TrafficStopController : MonoBehaviour {
 			TrafficColor.Color temp = this.color;
 			this.color = TrafficColor.getNext (this.color, this.oldColor);
 			this.oldColor = temp;
+
+			EventManager.TriggerEvent (EventManager.FormateEventName(this.gameObject, this.color.ToString()));
+
 			if(TrafficColor.Color.Yellow.Equals(this.color))
 				this.counter = this.switchTimer;
 			else	
 				this.counter = this.timer;
+
+
 			
 		}
 	}
