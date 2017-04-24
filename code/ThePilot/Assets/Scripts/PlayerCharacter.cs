@@ -17,6 +17,7 @@ public class PlayerCharacter : ThirdPersonCharacter {
 
 
 	public bool MoveToScooter(Vector3 pCameraForward){
+
 		Vector3 target = m_scooter.transform.position;
 	
 		Vector3 move = Vector3.MoveTowards (this.transform.position, target, this.m_MovingTurnSpeed * Time.deltaTime) - this.transform.position ;

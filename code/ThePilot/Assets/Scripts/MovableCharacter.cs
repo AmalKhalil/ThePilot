@@ -11,6 +11,7 @@ public class MovableCharacter : ThirdPersonCharacter {
 	private Vector3 start = Vector3.zero;
 	private Vector3 end = Vector3.zero;
 	private bool arrived = false;
+	private bool isGreen = false;
 
 
 	// Update is called once per frame
@@ -18,22 +19,25 @@ public class MovableCharacter : ThirdPersonCharacter {
 		if (this.start.Equals(Vector3.zero)) {
 			this.start = this.transform.position;
 			this.end = this.destination.transform.position;
-			EventManager.StartListening (EventManager.FormateEventName(trigger , TrafficColor.Color.Green.ToString()), TrafficSignIsGreen);
+			EventManager.StartListening (EventManager.FormateEventName(trigger ,"Human", TrafficColor.Color.Green.ToString()), TrafficSignIsGreen);
 		}
 
-		if (!arrived) {
+		if (this.isGreen && !this.arrived) {
 			this.arrived = this.MoveTo (this.end);
 		} 
 	}
 
 	public bool MoveTo(Vector3 target){
-		
-		Vector3 move = Vector3.MoveTowards (this.transform.position, target, this.m_MovingTurnSpeed * Time.deltaTime) - this.transform.position ;
+		Vector3 move = Vector3.MoveTowards (this.transform.position, target, this.m_MovingTurnSpeed * Time.fixedDeltaTime) - this.transform.position ;
 		this.Move (move , false, false);
 
 		float distance = Vector3.Distance (this.transform.position, target);
+		if (distance < 0.3f) {
+			m_Animator.SetFloat("Forward", 0f);
+			m_Animator.SetFloat("Turn", 0f);
+			m_Animator.SetBool("Crouch", false);
+			m_Animator.SetBool("OnGround", true);
 
-		if (distance < 0.1f) {
 			return true;
 		} else {
 			return false;
@@ -41,19 +45,21 @@ public class MovableCharacter : ThirdPersonCharacter {
 	}
 
 	public void Reverse(){
-		Debug.Log ("Reversed");
 		this.arrived = false;
 		Vector3 temp = this.start;
 		this.start = this.end;
 		this.end = temp;
-		this.transform.Rotate (Vector3.down * 180);
+		this.transform.LookAt (this.end);
 
 	}
 
 	public void TrafficSignIsGreen(){
+		this.isGreen = true;
 		if (this.arrived) {
 			this.Reverse ();
 		}
+
 	}
+		
 
 }

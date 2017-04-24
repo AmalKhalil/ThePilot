@@ -52,6 +52,12 @@ public class TrafficStopController : MonoBehaviour {
 	}
 
 	private void DecreaseCounter(){
+		
+		if (this.counter == this.timer) {
+			EventManager.TriggerEvent (EventManager.FormateEventName(this.gameObject,"Car", this.color.ToString()));
+			EventManager.TriggerEvent (EventManager.FormateEventName(this.gameObject,"Human", TrafficColor.getOppisit(this.color).ToString()));
+		}
+
 		if (this.counter > 0)
 			this.counter = this.counter - 1;
 		else {
@@ -59,15 +65,11 @@ public class TrafficStopController : MonoBehaviour {
 			this.color = TrafficColor.getNext (this.color, this.oldColor);
 			this.oldColor = temp;
 
-			EventManager.TriggerEvent (EventManager.FormateEventName(this.gameObject, this.color.ToString()));
 
 			if(TrafficColor.Color.Yellow.Equals(this.color))
 				this.counter = this.switchTimer;
 			else	
 				this.counter = this.timer;
-
-
-			
 		}
 	}
 }

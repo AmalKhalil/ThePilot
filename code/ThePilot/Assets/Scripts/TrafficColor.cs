@@ -29,4 +29,14 @@ public class TrafficColor {
 		return result;
 	}
 
+	public static Color getOppisit(Color pColor){
+		Color result = Color.Yellow;
+		if (Color.Red.Equals (pColor)) {
+			result = Color.Green;
+		} else if (Color.Green.Equals (pColor)) {
+			result = Color.Red;
+		}
+		return result;
+	}
+
 }

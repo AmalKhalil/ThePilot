@@ -73,8 +73,13 @@ public class EventManager : MonoBehaviour {
 		}
 	}
 
-	public static string FormateEventName (GameObject source, string parameter)
+	public static string FormateEventName (GameObject source, string param)
 	{
-		return source.name + "-" + parameter;
+		return source.name + "-" + param;
+	}
+
+	public static string FormateEventName (GameObject source, string param1, string param2)
+	{
+		return source.name + "-" + param1 + "-" + param2;
 	}
 }
