@@ -19,7 +19,8 @@ public class MovableCharacter : ThirdPersonCharacter {
 		if (this.start.Equals(Vector3.zero)) {
 			this.start = this.transform.position;
 			this.end = this.destination.transform.position;
-			EventManager.StartListening (EventManager.FormateEventName(trigger ,"Human", TrafficColor.Color.Green.ToString()), TrafficSignIsGreen);
+			string eventName = EventManager.FormateEventName (trigger, TrafficColor.Type.Human.ToString (), TrafficColor.Color.Green.ToString ());
+			EventManager.StartListening (eventName , TrafficSignIsGreen);
 		}
 
 		if (this.isGreen && !this.arrived) {
@@ -53,7 +54,7 @@ public class MovableCharacter : ThirdPersonCharacter {
 
 	}
 
-	public void TrafficSignIsGreen(){
+	public void TrafficSignIsGreen(GameObject source){
 		this.isGreen = true;
 		if (this.arrived) {
 			this.Reverse ();

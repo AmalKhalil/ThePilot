@@ -3,9 +3,15 @@ using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
+
+[System.Serializable]
+public class SourceEvent : UnityEvent<GameObject>
+{
+}
+
 public class EventManager : MonoBehaviour {
 
-	private Dictionary <string, UnityEvent> eventDictionary;
+	private Dictionary <string, SourceEvent> eventDictionary;
 
 	private static EventManager eventManager;
 
@@ -35,41 +41,41 @@ public class EventManager : MonoBehaviour {
 	{
 		if (eventDictionary == null)
 		{
-			eventDictionary = new Dictionary<string, UnityEvent>();
+			eventDictionary = new Dictionary<string, SourceEvent>();
 		}
 	}
 
-	public static void StartListening (string eventName, UnityAction listener)
+	public static void StartListening (string eventName, UnityAction<GameObject> listener)
 	{
-		UnityEvent thisEvent = null;
+		SourceEvent thisEvent = null;
 		if (instance.eventDictionary.TryGetValue (eventName, out thisEvent))
 		{
 			thisEvent.AddListener (listener);
 		} 
 		else
 		{
-			thisEvent = new UnityEvent ();
+			thisEvent = new SourceEvent();
 			thisEvent.AddListener (listener);
 			instance.eventDictionary.Add (eventName, thisEvent);
 		}
 	}
 
-	public static void StopListening (string eventName, UnityAction listener)
+	public static void StopListening (string eventName, UnityAction<GameObject> listener)
 	{
 		if (eventManager == null) return;
-		UnityEvent thisEvent = null;
+		SourceEvent thisEvent = null;
 		if (instance.eventDictionary.TryGetValue (eventName, out thisEvent))
 		{
 			thisEvent.RemoveListener (listener);
 		}
 	}
 
-	public static void TriggerEvent (string eventName)
+	public static void TriggerEvent (GameObject source , string eventName)
 	{
-		UnityEvent thisEvent = null;
+		SourceEvent thisEvent = null;
 		if (instance.eventDictionary.TryGetValue (eventName, out thisEvent))
 		{
-			thisEvent.Invoke ();
+			thisEvent.Invoke (source);
 		}
 	}
 
@@ -82,4 +88,5 @@ public class EventManager : MonoBehaviour {
 	{
 		return source.name + "-" + param1 + "-" + param2;
 	}
+
 }

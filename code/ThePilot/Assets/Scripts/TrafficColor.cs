@@ -8,6 +8,10 @@ public class TrafficColor {
 		Green, Yellow, Red
 	}
 
+	public enum Type {
+		Car, Human
+	}
+
 	public static int getValue(Color pColor){
 		int stateValue = 1;
 

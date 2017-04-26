@@ -15,6 +15,7 @@ TagManager:
   - LevelManager
   - PlayAgain
   - GPSCamera
+  - TrafficStop
   layers:
   - Default
   - TransparentFX
