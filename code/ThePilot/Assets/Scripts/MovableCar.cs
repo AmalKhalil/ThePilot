@@ -9,7 +9,6 @@ public class MovableCar : MonoBehaviour {
 
 	private Vector3 start = Vector3.zero;
 	private Vector3 end = Vector3.zero;
-	private bool arrived = false;
 	private NavMeshAgent agent;
 	private NavMeshPath path ;
 	private bool isStopped = false;
@@ -20,7 +19,7 @@ public class MovableCar : MonoBehaviour {
 		this.start = this.transform.position;
 		this.end = this.destination.transform.position;
 		this.agent = this.GetComponent<NavMeshAgent> ();
-		this.agent.SetDestination (this.destination.transform.position);
+		this.agent.SetDestination (this.end);
 		TrafficStopController [] controllers= GameObject.FindObjectsOfType<TrafficStopController>();
 		foreach(TrafficStopController controller in controllers){
 			string eventName = EventManager.FormateEventName (controller.gameObject, TrafficColor.Type.Car.ToString (), TrafficColor.Color.Green.ToString ());
@@ -28,13 +27,14 @@ public class MovableCar : MonoBehaviour {
 		}
 	}
 
-	public void Reverse(){
-		this.arrived = false;
-		Vector3 temp = this.start;
-		this.start = this.end;
-		this.end = temp;
-		this.transform.LookAt (this.end);
+	void Update () {
+		if (!this.isStopped && this.agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
+			this.Reset ();
+		}
+	}
 
+	public void Reset(){
+		this.gameObject.transform.position = this.start;
 	}
 
 	void OnCollisionEnter (Collision collision)
@@ -45,7 +45,8 @@ public class MovableCar : MonoBehaviour {
 	}
 
 	public void TrafficSignIsRed(GameObject source){
-		Debug.Log ("TrafficSignIsRed");
+		this.agent.velocity = Vector3.zero;
+		this.agent.Stop ();
 		this.isStopped = true;
 		this.stoppedBy = source;
 		this.agent.ResetPath ();
@@ -54,10 +55,9 @@ public class MovableCar : MonoBehaviour {
 
 	public void TrafficSignIsGreen(GameObject source){
 		if (this.isStopped && source.Equals (this.stoppedBy)) {
-			Debug.Log ("TrafficSignIsGreen");
 			this.isStopped = false;
 			this.stoppedBy = null;
-			this.agent.SetDestination (this.destination.transform.position);
+			this.agent.SetDestination (this.end);
 		}
 	}
 
