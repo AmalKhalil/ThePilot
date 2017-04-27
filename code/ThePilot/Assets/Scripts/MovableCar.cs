@@ -28,18 +28,23 @@ public class MovableCar : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!this.isStopped && this.agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance == 0) {
+		if (!this.isStopped && this.agent.hasPath && 
+			this.agent.pathStatus.Equals( NavMeshPathStatus.PathComplete) && 
+			this.agent.remainingDistance == 0) {
 			this.Reset ();
 		}
 	}
 
 	public void Reset(){
-		this.gameObject.transform.position = this.start;
+		this.transform.position = this.start;
+		this.agent.Warp (this.start);
+		this.agent.ResetPath ();
+		this.agent.SetDestination (this.end);
 	}
 
 	void OnCollisionEnter (Collision collision)
 	{
-		if ("TrafficStop".Equals (collision.collider.tag)) {
+		if ("TrafficStop".Equals (collision.collider.tag) && !this.isStopped) {
 			this.TrafficSignIsRed (collision.collider.gameObject);
 		}
 	}
