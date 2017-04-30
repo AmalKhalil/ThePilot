@@ -28,9 +28,10 @@ public class MovableCar : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!this.isStopped && this.agent.hasPath && 
+		if (!this.isStopped && 
+			this.agent.hasPath && 
 			this.agent.pathStatus.Equals( NavMeshPathStatus.PathComplete) && 
-			this.agent.remainingDistance == 0) {
+			this.agent.remainingDistance < 0.5) {
 			this.Reset ();
 		}
 	}
@@ -44,6 +45,7 @@ public class MovableCar : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision)
 	{
+		Debug.Log (collision.collider.name);
 		if ("TrafficStop".Equals (collision.collider.tag) && !this.isStopped) {
 			this.TrafficSignIsRed (collision.collider.gameObject);
 		}
