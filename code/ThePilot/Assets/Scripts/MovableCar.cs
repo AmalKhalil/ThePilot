@@ -38,14 +38,15 @@ public class MovableCar : MonoBehaviour {
 
 	public void Reset(){
 		this.transform.position = this.start;
+		this.agent.enabled = true;
 		this.agent.Warp (this.start);
 		this.agent.ResetPath ();
 		this.agent.SetDestination (this.end);
+
 	}
 
 	void OnCollisionEnter (Collision collision)
 	{
-		Debug.Log (collision.collider.name);
 		if ("TrafficStop".Equals (collision.collider.tag) && !this.isStopped) {
 			this.TrafficSignIsRed (collision.collider.gameObject);
 		}
@@ -57,11 +58,13 @@ public class MovableCar : MonoBehaviour {
 		this.isStopped = true;
 		this.stoppedBy = source;
 		this.agent.ResetPath ();
+		this.agent.enabled = false;
 
 	}
 
 	public void TrafficSignIsGreen(GameObject source){
 		if (this.isStopped && source.Equals (this.stoppedBy)) {
+			this.agent.enabled = true;
 			this.isStopped = false;
 			this.stoppedBy = null;
 			this.agent.SetDestination (this.end);
