@@ -14,6 +14,7 @@ public class TrafficStopController : MonoBehaviour {
 	private TrafficLightController trafficLight;
 	private int counter = 20;
 	private TrafficColor.Color oldColor;
+	private BoxCollider wall;
 
 
 	public enum Mode {
@@ -32,6 +33,7 @@ public class TrafficStopController : MonoBehaviour {
 		this.trafficLight = this.GetComponentInChildren<TrafficLightController> ();
 		
 		this.counter = this.timer;
+		this.wall = this.GetComponent<BoxCollider> ();
 		this.InvokeRepeating ("DecreaseCounter",1,1);
 
 	}
@@ -52,17 +54,29 @@ public class TrafficStopController : MonoBehaviour {
 	}
 
 	private void DecreaseCounter(){
+		
+		if (this.counter == this.timer) {
+			EventManager.TriggerEvent (this.gameObject, EventManager.FormateEventName(this.gameObject,TrafficColor.Type.Car.ToString(), this.color.ToString()));
+			EventManager.TriggerEvent (this.gameObject, EventManager.FormateEventName(this.gameObject,TrafficColor.Type.Human.ToString(), TrafficColor.getOppisit(this.color).ToString()));
+			if (this.color.Equals (TrafficColor.Color.Green)) {
+				this.wall.enabled = false;
+			} else if (this.color.Equals (TrafficColor.Color.Red)) {
+				this.wall.enabled = true;
+			} 
+		}
+
 		if (this.counter > 0)
 			this.counter = this.counter - 1;
 		else {
 			TrafficColor.Color temp = this.color;
 			this.color = TrafficColor.getNext (this.color, this.oldColor);
 			this.oldColor = temp;
+
+
 			if(TrafficColor.Color.Yellow.Equals(this.color))
 				this.counter = this.switchTimer;
 			else	
 				this.counter = this.timer;
-			
 		}
 	}
 }

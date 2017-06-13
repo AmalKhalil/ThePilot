@@ -8,6 +8,10 @@ public class TrafficColor {
 		Green, Yellow, Red
 	}
 
+	public enum Type {
+		Car, Human
+	}
+
 	public static int getValue(Color pColor){
 		int stateValue = 1;
 
@@ -24,6 +28,16 @@ public class TrafficColor {
 		if (Color.Yellow.Equals (pCurrentColor) && Color.Red.Equals (pOldColor)) {
 			result = Color.Green;
 		} else if (Color.Yellow.Equals (pCurrentColor) && Color.Green.Equals (pOldColor)) {
+			result = Color.Red;
+		}
+		return result;
+	}
+
+	public static Color getOppisit(Color pColor){
+		Color result = Color.Yellow;
+		if (Color.Red.Equals (pColor)) {
+			result = Color.Green;
+		} else if (Color.Green.Equals (pColor)) {
 			result = Color.Red;
 		}
 		return result;

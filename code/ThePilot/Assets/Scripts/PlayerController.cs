@@ -14,12 +14,13 @@ public class PlayerController : MonoBehaviour {
 	private bool m_Jump;
 	private GameObject scotterObject;
 	private Scooter scotter;
+	private GameObject jumbButton;
 
 	private void Start()
 	{
 		this.scotterObject = GameObject.FindGameObjectWithTag ("Scooter");
 		this.scotter =  this.scotterObject.GetComponent<Scooter> ();
-
+		this.jumbButton = GameObject.FindGameObjectWithTag ("JumpButton");
 		// get the transform of the main camera
 		if (Camera.main != null)
 		{
@@ -82,6 +83,13 @@ public class PlayerController : MonoBehaviour {
 	#endif
 	// pass all parameters to the character control script
 	if (m_Jump) {
+		if (this.jumbButton != null) {
+				Debug.Log ("jumbButton disabled");
+
+				this.jumbButton.SetActive (false);
+
+		}
+
 		if (m_Character.MoveToScooter (m_CamForward)) {
 			m_Character.JumpOnScooter (m_CamForward);
 			this.scotter.sethasRider (true);
