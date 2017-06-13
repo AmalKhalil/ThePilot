@@ -36,8 +36,10 @@ public class LevelManager : MonoBehaviour {
 
 		enableGPSCamera ();
 
-		if(this.playAgain != null)
-			this.playAgain.SetActive(false);
+		if (this.playAgain != null) {
+			Debug.Log ("playAgain disabled");
+			this.playAgain.SetActive (false);
+		}
 		
 		this.GenerateAddress (area);
 		if(this.address != null){
@@ -107,8 +109,8 @@ public class LevelManager : MonoBehaviour {
 		if (path.corners.Length != 0) {
 			LineRenderer line = this.gameObject.AddComponent<LineRenderer> ();
 			line.material = new Material (Shader.Find ("Sprites/Default")) { color = Color.yellow };
-			line.startWidth = 5f;
-			line.endWidth = 5f;
+			line.startWidth = 10f;
+			line.endWidth = 10f;
 			line.startColor = Color.cyan;
 			line.startColor = Color.cyan;
 			line.numPositions = path.corners.Length;

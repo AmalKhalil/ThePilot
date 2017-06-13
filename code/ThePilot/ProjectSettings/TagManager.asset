@@ -16,6 +16,7 @@ TagManager:
   - PlayAgain
   - GPSCamera
   - TrafficStop
+  - JumpButton
   layers:
   - Default
   - TransparentFX
