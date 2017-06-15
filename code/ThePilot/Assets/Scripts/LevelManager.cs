@@ -37,13 +37,12 @@ public class LevelManager : MonoBehaviour {
 		enableGPSCamera ();
 
 		if (this.playAgain != null) {
-			Debug.Log ("playAgain disabled");
 			this.playAgain.SetActive (false);
 		}
 		
 		this.GenerateAddress (area);
 		if(this.address != null){
-			this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.street + " - " + this.address.area;
+			this.addressText.text =  /*"Mr. John Smith \n" +*/ this.address.no + ", " + this.address.street + " - " + this.address.area;
 			this.DrawGPSRoute (this.scooter.gameObject, this.destination);
 		}
 	}
@@ -57,7 +56,7 @@ public class LevelManager : MonoBehaviour {
 				this.brakeText.color = Color.red;
 			} else {
 				this.brakeText.text = "Brake Off";
-				this.brakeText.color = Color.white;
+				this.brakeText.color = Color.yellow;
 			}
 
 			if (this.destination != null) {

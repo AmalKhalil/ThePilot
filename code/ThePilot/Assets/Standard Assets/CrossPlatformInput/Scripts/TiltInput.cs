@@ -45,7 +45,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         private void OnEnable()
         {
-            if (mapping.type == AxisMapping.MappingType.NamedAxis)
+			if (mapping.type == AxisMapping.MappingType.NamedAxis)
             {
                 m_SteerAxis = new CrossPlatformInputManager.VirtualAxis(mapping.axisName);
                 CrossPlatformInputManager.RegisterVirtualAxis(m_SteerAxis);
