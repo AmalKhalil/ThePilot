@@ -58,7 +58,7 @@ namespace UnityStandardAssets.CrossPlatformInput
             float angle = 0;
 			 if (Input.acceleration != Vector3.zero)
             {
-                switch (tiltAroundAxis)
+				 switch (tiltAroundAxis)
                 {
                     case AxisOptions.ForwardAxis:
                         angle = Mathf.Atan2(Input.acceleration.x, -Input.acceleration.y)*Mathf.Rad2Deg +

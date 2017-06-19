@@ -61,7 +61,6 @@ public class LevelManager : MonoBehaviour {
 
 			if (this.destination != null) {
 				float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
-				//Debug.Log ("Distance to target : "+distance);
 				if (distance < 25 & this.scooter.getVelocityInKm () < 20) {
 					this.addressText.text = "You are there. Congratulation!!!";
 					this.addressText.color = Color.red;
