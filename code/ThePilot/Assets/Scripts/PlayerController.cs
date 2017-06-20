@@ -67,9 +67,7 @@ public class PlayerController : MonoBehaviour
 		if (m_Jump) {
 			Jumb ();
 		} else {
-			#if !MOBILE_INPUT
-				Walk ();
-			#endif
+			Walk ();
 		}
 	}
 

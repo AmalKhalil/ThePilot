@@ -54,11 +54,6 @@ public class PlayerCharacter : ThirdPersonCharacter {
 		//Freeze Postion
 		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition; 
 
-		Transform mobileControls = m_scooter.transform.Find ("MobileControls");
-		if (mobileControls) {
-			mobileControls.gameObject.SetActive (true);
-		}
-
 	}
 
 	public void JumpOffScooter(){

@@ -39,7 +39,7 @@ public class ScotterController : MonoBehaviour
 
 			//Get Input
 			Vector3 input = GetMoveInput ();
-
+			Debug.Log (input);
 			HandleGasPush (input.z);
 			HandleSteerRotation (input.x);
 		} 	
@@ -73,13 +73,16 @@ public class ScotterController : MonoBehaviour
 			y = 0,
 			z = CrossPlatformInputManager.GetAxis ("Vertical")
 		};
+
 	}
 
 	private void HandleGasPush (float push)
 	{
 		float forward = Mathf.Clamp(push, -1, 1);
+		//Change motor torque for rear wheel
+		rearWheel.motorTorque = forward * motorMax;
 
-		if (forward > 0) 
+		/*if (forward > 0) 
 		{
 			//Change motor torque for rear wheel
 			rearWheel.motorTorque = forward * motorMax;
@@ -91,15 +94,15 @@ public class ScotterController : MonoBehaviour
 
 			if (this.scotter.getVelocityInKm () == 0)
 				this.StopRotation ();
-		}
+		}*/
 	}
 		
 	private void HandleSteerRotation (float angle)
 	{
 		float steer = (float) Math.Round (angle);
 
-		if (this.scotter.getVelocityInKm () > lowVelocity)
-			steer = steer / 10;
+		//if (this.scotter.getVelocityInKm () > lowVelocity)
+		//	steer = steer / 10;
 
 		this.frontWheel.steerAngle = steer * steerMax;
 		RotateSteerVisually ();
