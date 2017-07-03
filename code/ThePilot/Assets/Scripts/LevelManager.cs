@@ -37,13 +37,12 @@ public class LevelManager : MonoBehaviour {
 		enableGPSCamera ();
 
 		if (this.playAgain != null) {
-			Debug.Log ("playAgain disabled");
 			this.playAgain.SetActive (false);
 		}
 		
 		this.GenerateAddress (area);
 		if(this.address != null){
-			this.addressText.text =  "Mr. John Smith \n" + this.address.no + ", " + this.address.street + " - " + this.address.area;
+			this.addressText.text =  /*"Mr. John Smith \n" +*/ this.address.no + ", " + this.address.street + " - " + this.address.area;
 			this.DrawGPSRoute (this.scooter.gameObject, this.destination);
 		}
 	}
@@ -51,18 +50,17 @@ public class LevelManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (gameManager.isLevelInProgress()) {
-			this.speedText.text = Math.Round (this.scooter.getVelocityInKm ()) + " KM/H";
+			this.speedText.text = Math.Round (this.scooter.getVelocityInKm ()) + " KM/H" + " ,"+this.scooter.getSteerAngle();
 			if (this.scooter.getBrakeTorque () > 0) {
 				this.brakeText.text = "Brake On";
 				this.brakeText.color = Color.red;
 			} else {
 				this.brakeText.text = "Brake Off";
-				this.brakeText.color = Color.white;
+				this.brakeText.color = Color.yellow;
 			}
 
 			if (this.destination != null) {
 				float distance = Vector3.Distance (this.scooter.transform.position, this.destination.transform.position);
-				//Debug.Log ("Distance to target : "+distance);
 				if (distance < 25 & this.scooter.getVelocityInKm () < 20) {
 					this.addressText.text = "You are there. Congratulation!!!";
 					this.addressText.color = Color.red;

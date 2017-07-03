@@ -32,7 +32,14 @@ public class GameManager : MonoBehaviour {
 		this.levelInProgress = true;	
 	}
 		
-
+	// Update is called once per frame
+	void Update () {
+		if (Input.GetKeyDown(KeyCode.Escape)) 
+		{ 
+			Debug.Log ("Innnnn");
+			Application.Quit();
+		}
+	}
 
 
 	public void LevelLost(){

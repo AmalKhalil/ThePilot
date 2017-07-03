@@ -17,6 +17,8 @@ TagManager:
   - GPSCamera
   - TrafficStop
   - JumpButton
+  - MobileControls
+  - SpeedButton
   layers:
   - Default
   - TransparentFX
@@ -27,7 +29,7 @@ TagManager:
   - 
   - 
   - GPS
-  - 
+  - Player
   - 
   - 
   - 
