@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (gameManager.isLevelInProgress()) {
-			this.speedText.text = Math.Round (this.scooter.getVelocityInKm ()) + " KM/H";
+			this.speedText.text = Math.Round (this.scooter.getVelocityInKm ()) + " KM/H" + " ,"+this.scooter.getSteerAngle();
 			if (this.scooter.getBrakeTorque () > 0) {
 				this.brakeText.text = "Brake On";
 				this.brakeText.color = Color.red;

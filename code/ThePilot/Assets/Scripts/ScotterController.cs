@@ -7,40 +7,63 @@ using System;
 public class ScotterController : MonoBehaviour
 {
 
-	public float steerMax = 20f;
+	public float steerMax = 30f;
 	public float motorMax = 800f;
 	public float brakeMax = 80000f;
 
+	public float steerStep = 5f;
+	public float motorStep = 800f;
+	public float brakeStep = 8000f;
+
+	public bool moveOnStart = true;
+	public float intialMotorTorque = 2000f;
+
 	public WheelCollider frontWheel;
 	public WheelCollider rearWheel;
-	public GameObject stearing;
+	public GameObject [] stearingParts;
 
-	private float lowVelocity = 10;
 	private Scooter scotter;
 
 	private Rigidbody scotterRigidbody;
 	private GameManager gameManager;
+	private GameObject speedButton;
 
 	void Start ()
 	{
-		this.gameManager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ();
-		this.scotterRigidbody = this.GetComponent<Rigidbody> ();
-		this.scotterRigidbody.centerOfMass = new Vector3 (0f, - 0.05f, 0f);
-		this.scotter = this.GetComponent<Scooter> ();
-		this.scotter.setRigidbody (this.scotterRigidbody);
-		this.scotter.setFrontWheel (this.frontWheel);
+		gameManager = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameManager> ();
+		scotterRigidbody = GetComponent<Rigidbody> ();
+		scotterRigidbody.centerOfMass = new Vector3 (0f, - 0.05f, 0f);
+		scotter = GetComponent<Scooter> ();
+		scotter.setRigidbody (scotterRigidbody);
+		scotter.setFrontWheel (frontWheel);
+		speedButton = GameObject.FindGameObjectWithTag ("SpeedButton");
+		if (speedButton != null) {
+			speedButton.SetActive (false);
+		}
 	}
 
 	void FixedUpdate ()
 	{
-		if (this.scotter != null && this.scotter.hasRider ()) {
+		if (scotter != null && scotter.hasRider ()) {
+
+			if (speedButton != null && ! speedButton.activeSelf) {
+				speedButton.SetActive (true);
+			}
 
 			AllowRotation ();
 
+			if (moveOnStart)
+				MoveForward (intialMotorTorque);
+
 			//Get Input
 			Vector3 input = GetMoveInput ();
-			Debug.Log (input);
-			HandleGasPush (input.z);
+
+			if (CrossPlatformInputManager.GetButtonDown ("Speed")) {
+				HandleGasPush (1f);
+			} else {
+				HandleGasPush (input.z);
+
+			}
 			HandleSteerRotation (input.x);
 		} 	
 	}
@@ -48,20 +71,20 @@ public class ScotterController : MonoBehaviour
 
 	void OnCollisionEnter (Collision collision)
 	{
-		if (collision.gameObject.tag.Equals("DeathZone") || this.IsGrounded () == false) {
-			this.gameManager.LevelLost ();
-			//DestroyObject (this.gameObject);
+		if (collision.gameObject.tag.Equals("DeathZone") | !IsGrounded ()) {
+			gameManager.LevelLost ();
+			//DestroyObject (gameObject);
 		}
 	}
 
 	private void AllowRotation ()
 	{
-		this.scotterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
+		scotterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
 	}
 
 	private void StopRotation ()
 	{
-		this.scotterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
+		scotterRigidbody.constraints = RigidbodyConstraints.FreezeRotationZ;
 	}
 
 
@@ -80,47 +103,48 @@ public class ScotterController : MonoBehaviour
 	{
 		float forward = Mathf.Clamp(push, -1, 1);
 		//Change motor torque for rear wheel
-		rearWheel.motorTorque = forward * motorMax;
-
-		/*if (forward > 0) 
+		float torque = forward * motorStep;
+		if (forward > 0) 
 		{
 			//Change motor torque for rear wheel
-			rearWheel.motorTorque = forward * motorMax;
+			MoveForward (torque);
 		} 
-		else 
+		/*else 
 		{
 			// Add brake force
-			this.rearWheel.brakeTorque = this.frontWheel.brakeTorque = forward * this.brakeMax * -1;
+			rearWheel.brakeTorque = frontWheel.brakeTorque = forward * brakeMax * -1;
 
-			if (this.scotter.getVelocityInKm () == 0)
-				this.StopRotation ();
+			if (scotter.getVelocityInKm () == 0)
+				StopRotation ();
 		}*/
+
+	}
+
+	private void MoveForward (float torque)
+	{
+		rearWheel.motorTorque = torque;
 	}
 		
 	private void HandleSteerRotation (float angle)
 	{
-		float steer = (float) Math.Round (angle);
-
-		//if (this.scotter.getVelocityInKm () > lowVelocity)
-		//	steer = steer / 10;
-
-		this.frontWheel.steerAngle = steer * steerMax;
-		RotateSteerVisually ();
+		float steer = Mathf.Clamp(angle, -1, 1);
+		float steerAngle = steer * steerStep;
+		frontWheel.steerAngle = steerAngle;
+		RotateSteerVisually (steerAngle);
 	}
 		
 		
-	private void RotateSteerVisually ()
+	private void RotateSteerVisually (float angle)
 	{
-		if (stearing != null) {
-			Transform stearingTrans = stearing.transform;
-			stearingTrans.localEulerAngles = new Vector3 (stearingTrans.localEulerAngles.x, frontWheel.steerAngle, stearingTrans.localEulerAngles.z);
-			//stearingTrans.Rotate (0, frontWheel.rpm / 60 * 360 * Time.deltaTime, 0);
-		}
+			for(int i = 0; stearingParts != null && i < stearingParts.Length ; i++){
+				Transform stearingTrans = stearingParts[i].transform;
+				stearingTrans.localEulerAngles = new Vector3 (stearingTrans.localEulerAngles.x, angle, stearingTrans.localEulerAngles.z);
+			}
 	}
 
 
 	private Boolean IsGrounded ()
 	{
-		return this.rearWheel.isGrounded;
+		return rearWheel.isGrounded;
 	}
 }

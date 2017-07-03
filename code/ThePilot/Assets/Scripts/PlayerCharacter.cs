@@ -54,6 +54,9 @@ public class PlayerCharacter : ThirdPersonCharacter {
 		//Freeze Postion
 		this.m_Rigidbody.constraints = RigidbodyConstraints.FreezePosition; 
 
+		Camera.main.enabled = false;
+		this.m_scooter.GetComponentInChildren<Camera> ().enabled = true;
+
 	}
 
 	public void JumpOffScooter(){

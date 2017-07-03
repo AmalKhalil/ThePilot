@@ -92,11 +92,11 @@ public class PlayerController : MonoBehaviour
 			this.jumbButton.SetActive (false);
 		}
 
-
 		if (m_Character.MoveToScooter (m_CamForward)) {
 			m_Character.JumpOnScooter (m_CamForward);
 			this.scotter.sethasRider (true);
 			m_Jump = false;
+
 		}
 	}
 

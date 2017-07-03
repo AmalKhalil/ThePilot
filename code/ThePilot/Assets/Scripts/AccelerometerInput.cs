@@ -16,8 +16,11 @@ public class AccelerometerInput : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		steerAxis.Update (Input.acceleration.x);
-		gasAxis.Update (-Input.acceleration.z);
+		float x = Input.acceleration.x;
+		float z = -Input.acceleration.z;
+
+		steerAxis.Update (x);
+		gasAxis.Update (z);
 	}
 
 	private CrossPlatformInputManager.VirtualAxis getAxisOrCreate(string name){
